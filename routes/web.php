@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TableController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +30,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::resource('categories', 'App\Http\Controllers\CategoryController')->except([
+    'update'
+]);
+
+Route::PUT('categories/{category}', [CategoryController::class, 'update'])->name('categories.update')->middleware(['auth']);
+
+Route::resource("tables", 'App\Http\Controllers\TableController')->except(['update']);
+
+Route::PUT('tables/{table}', [TableController::class, 'update'])->name('tables.update')->middleware(['auth']);
+
+
+require __DIR__ . '/auth.php';
