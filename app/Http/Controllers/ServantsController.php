@@ -8,6 +8,11 @@ use App\Http\Requests\UpdateServantsRequest;
 
 class ServantsController extends Controller
 {
+
+    public function _construct()
+    {
+        $this->middleware("auth");
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +20,13 @@ class ServantsController extends Controller
      */
     public function index()
     {
-        //
+        $servants = Servants::all();
+
+        return view('managements.servants.index', compact('servants'));
+
+        // return view("managements.servants.index")->with([
+        //     "servants" => Servants::paginate(4)
+        // ]);
     }
 
     /**
@@ -26,7 +37,10 @@ class ServantsController extends Controller
     public function create()
     {
         //
+        //
+        return view("managements.servants.create");
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -37,6 +51,18 @@ class ServantsController extends Controller
     public function store(StoreServantsRequest $request)
     {
         //
+        $this->validate($request, [
+            "name" => "required|min:3"
+        ]);
+
+
+        Servants::create([
+            "name" => $request->name,
+            "adress" => $request->adress
+        ]);
+        return redirect()->route("servants.index")->with([
+            "success" => "table Ajoute avec success"
+        ]);
     }
 
     /**
@@ -49,16 +75,20 @@ class ServantsController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Servants  $servants
      * @return \Illuminate\Http\Response
      */
-    public function edit(Servants $servants)
+    public function edit($id)
     {
-        //
+        // dd($id);
+        $var = Servants::findOrFail($id);
+        return view("managements.servants.edit")->with([
+            "servant" => Servants::findOrFail($id),
+
+        ]);
     }
 
     /**
@@ -68,9 +98,21 @@ class ServantsController extends Controller
      * @param  \App\Models\Servants  $servants
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateServantsRequest $request, Servants $servants)
+    public function update(UpdateServantsRequest $request, $id)
     {
         //
+        $this->validate($request, [
+            "name" => "required|min:3"
+        ]);
+        $servant = Servants::findOrFail($id);
+        
+        $servant->update([
+            "name" => $request->name,
+            "adress" => $request->adress
+        ]);
+        return redirect()->route("servants.index")->with([
+            "success" => "table modifie avec success"
+        ]);
     }
 
     /**
@@ -79,8 +121,12 @@ class ServantsController extends Controller
      * @param  \App\Models\Servants  $servants
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Servants $servants)
+    public function destroy($id)
     {
-        //
+        $servant = Servants::findOrFail($id);
+        $servant->delete();
+        return redirect()->route("servants.index")->with([
+            "success" => "table supprime avec success  avec success"
+        ]);
     }
 }

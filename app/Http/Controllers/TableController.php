@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Dotenv\Util\Str;
+// use Dotenv\Util\Str;
 use App\Models\Table;
-// use Illuminate\Support\str;
+use Illuminate\Support\str;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreTableRequest;
 use App\Http\Requests\UpdateTableRequest;
 use Illuminate\Console\View\Components\Task;
@@ -13,7 +14,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class TableController extends Controller
 {
-
 
     public function __construct()
     {
@@ -106,16 +106,21 @@ class TableController extends Controller
         $this->validate(
             $request,
             [
-                "name" => "required|unique:tables,name," . $table->id . ",id",
+                "name" => "required|unique:tables,name,",
                 "status" => "required |boolean"
             ]
         );
         $name = $request->name;
+        $slug =  Str::slug($name);
+        $data['name'] = $name;
+        $data['slug'] = $slug;
+        $data['status'] = $request->status;
         $table->update([
             "name" => $name,
-            "slug" => Str::slug($name),
-            "status" => $request->status,
+            "slug" => $slug,
+            "status" => $request->status
         ]);
+        DB::table('tables')->where('slug', $slug)->update($data);
         return redirect()->route("tables.index")->with([
             "success" => "table modifie avec success"
         ]);

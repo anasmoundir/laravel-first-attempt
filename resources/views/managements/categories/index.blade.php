@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
-                                Sidebar
+                                @include('layouts.sidebar')
                             </div>
                             <div class="col-md-8">
                                 <div class="d-flex flex-row  justify-content-between align-items-center border-buttom  pb-1">
@@ -57,7 +57,7 @@
                                     </tbody>
                                 </table>
                                 <div class="my-3 d-flex  justify-content-center align-items-center">
-                                    {{$categories ->links()}}
+                                    {{-- {{$categories ->links()}} --}}
                                 </div>
                             </div>
                         </div>

@@ -13,54 +13,57 @@
                             <div class="col-md-8">
                                 <div class="d-flex flex-row  justify-content-between align-items-center border-buttom  pb-1">
                                     <h3 class="text-secondary">
-                                        <i class="fas fa-chair"></i> tables
+                                        <i class="fas fa-user-clipboard-list"> menu
                                         </i>
                                     </h3>
-                                    <a href="{{ route('tables.create') }}" class="btn btn-primary">
-                                        <i class="fa-solid fa-plus"></i>table
+                                    <a href="{{ route('menus.create') }}" class="btn btn-primary">
+                                        <i class="fa-solid fa-plus"></i>
                                     </a>
                                 </div>
                                 <table class="table table-hover table-responsive-sm">
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>name</th>
-                                            <th>status</th>
+                                            <th>title</th>
+                                            <th>Description</th>
+                                            <th>Prix </th>
+                                            <th>Category </th>
+                                            <th>Image </th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($tables as $table)
+                                        @foreach ($menus as $menu)
                                             <tr>
-                                                <td>{{ $table->id }}</td>
-                                                <td>{{ $table->name }}</td>
+                                                <td>{{ $menu->id }}</td>
+                                                <td>{{ $menu->title }}</td>
+                                                <td>{{ substr($menu->description, 0, 100) }}</td>
+                                                <td>{{ $menu->price }} DH</td>
+                                                <td>{{ $menu->category->title }}</td>
                                                 <td>
-                                                    @if ($table->status)
-                                                        <span class="badge bg-success">
-                                                            OUI </span>
-                                                    @else
-                                                        <span class="badge bg-danger">
-                                                            NON </span>
-                                                    @endif
+                                                    <img src="{{ asset('images/menus/' . $menu->image) }}"
+                                                        alt="{{ $menu->title }}" class="fluid rounded">
+
+
+
 
                                                 </td>
+
                                                 <td class="d-flex  flex-row justify-content-center">
-                                                    <a href="{{ route('tables.edit', $table->slug) }}"
+                                                    <a href="{{ route('menus.edit', $menu->slug) }}"
                                                         class="btn btn-warning mr-2">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <form id="{{ $table->id }}"
-                                                        action="{{ route('tables.destroy', $table->slug) }}" method="POST">
+                                                    <form id="{{ $menu->id }}"
+                                                        action="{{ route('menus.destroy', $menu->slug) }}" method="POST">
                                                         @csrf
-                                                        @method('DELETE')
+                                                        {{ method_field('DELETE') }}
                                                         <button
-                                                            onclick="event.preventDefault(); if(confirm('voulez vous supprimer la table {{ $table->name }} ?'))
-                                                        document.getElementById({{ $table->id }}).submit();"
+                                                            onclick="event.preventDefault(); if(confirm('voulez vous supprimer le menu {{ $menu->title }} ?'))
+                                                        document.getElementById({{ $menu->id }}).submit();"
                                                             class="btn-danger ">
-
                                                             <i class="fas fa-trash p-3"></i>
                                                         </button>
-
                                                     </form>
                                                 </td>
                                             </tr>
@@ -68,7 +71,6 @@
                                     </tbody>
                                 </table>
                                 <div class="my-3 d-flex  justify-content-center align-items-center">
-
                                 </div>
                             </div>
                         </div>
@@ -76,6 +78,7 @@
                 </div>
             </div>
         </div>
+
 
     </div>
 @endsection

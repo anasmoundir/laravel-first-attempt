@@ -8,7 +8,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
-                                Sidebar
+                                @include('layouts.sidebar')
+
                             </div>
                             <div class="col-md-8">
                                 <h3 class="text-secondary  border-bottom mb-3 p-2">

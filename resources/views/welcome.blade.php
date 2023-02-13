@@ -8,11 +8,21 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.50.0/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-    <title>Laravel</title>
+    <title>coffee shop</title>
 
+    <style>
+        .antialiased {
+            overflow: scroll;
+            height: 1800px;
+        }
+    </style>
 </head>
+
+
 
 <body class="antialiased">
 
@@ -43,38 +53,23 @@
                             @auth
                                 <li>
                                     <a href="{{ url('/dashboard') }}"
-                                        class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
+                                        class="text-sm text-gray-700 dark:text-gray-500 underline">accueill</a>
                                 </li>
                             @else
-                                <li>
-                                    <a href="{{ route('login') }}"
-                                        class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-                                </li>
                                 @if (Route::has('register'))
                                     <li>
-                                        <a href="{{ route('register') }}"
-                                            class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                                        <a href="{{ route('login') }}"
+                                            class="text-sm text-gray-700 dark:text-gray-500 underline">are you the admin of
+                                            this website</a>
                                     </li>
                                 @endif
                             @endauth
                         </div>
                     @endif
-
-
                 </ul>
             </div>
         </div>
     </nav>
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -106,75 +101,34 @@
                     best offer
                 </p>
             </div>
-            <div class="w-full ">
-                <section class=" h-3/5">
-                    <div class="carousel rounded-box h-96">
-                        <div class="carousel-item w-full ">
-                            <img src={{ asset('images\1.jpg') }} class="w-full " />
-                        </div>
-                        <div class="carousel-item w-full ">
-                            <img src={{ asset('images\2.jpg') }} class="w-full" />
-                        </div>
-                        <div class="carousel-item w-full ">
-                            <img src={{ asset('images\3.jpg') }} class="w-full" />
-                        </div>
-                        <div class="carousel-item w-full">
-                            <img src={{ asset('images\5.png') }} class="w-full" />
-                        </div>
-                        <div class="carousel-item w-full">
-                            <img src={{ asset('images\6.jpg') }} class="w-full" />
-                        </div>
-
-                        <div class="carousel-item w-full">
-                            <img src={{ asset('images\1.jpg') }} class="w-full" />
-                        </div>
+            <div class="w-full">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        @foreach ($menus as $menu)
+                            <div class="carousel-item @if ($loop->first) active @endif">
+                                <div class="card ">
+                                    <img src="{{ asset('images/menus/' . $menu->image) }}" class="card-img-top"
+                                        alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $menu->title }} {{ $menu->price }} DH</h5>
+                                        <p class="card-text">{{ $menu->description }}</p>
+                                        <p class="card-text">{{ $menu->category->name }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                </section>
-            </div>
-        </div>
-
-
-
-
-        <div class="flex items-center flex-wrap mb-20">
-            <div class="w-full md:w-1/2">
-                <section>
-                    <div class="w-64 carousel rounded-box h-80">
-                        <div class="carousel-item w-full">
-                            <img src="{{ asset('images\coffee-5176961_1920.jpg') }} class="w-full" />
-                        </div>
-                        <div class="carousel-item w-full">
-                            <img src="{{ asset('images\coffee-5176961_1920.jpg') }} class="w-full"
-                                alt="Tailwind CSS Carousel component" />
-                        </div>
-                        <div class="carousel-item w-full">
-                            <img src="{{ asset('images\coffee-5176961_1920.jpg') }}  class="w-full"
-                                alt="Tailwind CSS Carousel component" />
-                        </div>
-                        <div class="carousel-item w-full">
-                            <img src="{{ asset('assets/images/image.png') }} class="w-full"
-                                alt="Tailwind CSS Carousel component" />
-                        </div>
-                        <div class="carousel-item w-full">
-                            <img src="{{ asset('assets/images/image.png') }} class="w-full"
-                                alt="Tailwind CSS Carousel component" />
-                        </div>
-                        <div class="carousel-item w-full">
-                            <img src="{{ asset('assets/images/image.png') }} class="w-full"
-                                alt="Tailwind CSS Carousel component" />
-                        </div>
-                        <div class="carousel-item w-full">
-                            <img src="{{ asset('assets/images/image.png') }} class="w-full"
-                                alt="Tailwind CSS Carousel component" />
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-        </div>
+                    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="">Next</span>
+                    </a>
+                </div>
 
     </section>
-
 
 
 

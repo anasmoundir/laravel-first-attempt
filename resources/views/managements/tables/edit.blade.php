@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
-                                Sidebar
+                                @include('layouts.sidebar')
                             </div>
                             <div class="col-md-8">
                                 <h3 class="text-secondary  border-bottom mb-3 p-2">
@@ -20,8 +20,8 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="form-group">
-                                        <input type="text" name="title" id="title" class="form-control"
-                                            placeholder="Title" value="{{ $table->name }}">
+                                        <input type="text" name="name" id="name" class="form-control"
+                                            placeholder="name" value="{{ $table->name }}">
                                     </div>
                                     <div class="form-group">
                                         <select name="status" class="form-control">

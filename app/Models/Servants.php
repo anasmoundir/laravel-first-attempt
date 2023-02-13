@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Servants extends Model
 {
     use HasFactory;
-    protected $fillable = ["name", "adresse"];
+    protected $fillable = ["name", "adress"];
     public function sales()
     {
         return $this->hasMany(Sales::class);

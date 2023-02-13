@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Requests\StoreMenuRequest;
+use App\Models\Menu;
 use Illuminate\Support\str;
 
 class CategoryController extends Controller
@@ -13,10 +14,13 @@ class CategoryController extends Controller
 
 
 
-    public function __construct()
+
+
+   public function __construct()
     {
         $this->middleware('auth');
-    }
+    } 
+
 
     /**
      * Display a listing of the resource.
@@ -113,7 +117,6 @@ class CategoryController extends Controller
         $category->update([
             "title" => $title,
             "slug" => Str::slug($title)
-
         ]);
 
         return redirect()->route("categories.index")->with([
